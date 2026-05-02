@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "Category": {
+      "title": "Category",
+      "description": "Top-level category for products",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["name"]
+    },
+    "SubCategory": {
+      "title": "SubCategory",
+      "description": "Secondary level category within a primary category",
+      "type": "object",
+      "properties": {
+        "categoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["categoryId", "name"]
+    },
+    "SubSubCategory": {
+      "title": "SubSubCategory",
+      "description": "Tertiary level category within a sub-category",
+      "type": "object",
+      "properties": {
+        "subCategoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["subCategoryId", "name"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A single jewelry item with image and technical details",
+      "type": "object",
+      "properties": {
+        "categoryId": { "type": "string" },
+        "subCategoryId": { "type": "string" },
+        "subSubCategoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "options": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "dealerName": { "type": "string" },
+        "subItem": { "type": "string" },
+        "weight": { "type": "number" }
+      },
+      "required": ["name", "imageUrl", "categoryId"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "App-wide settings, including security PIN",
+      "type": "object",
+      "properties": {
+        "deletePin": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "All primary categories"
+    },
+    "/subcategories/{subCategoryId}": {
+      "schema": "SubCategory",
+      "description": "All sub-categories"
+    },
+    "/subsubcategories/{subSubCategoryId}": {
+      "schema": "SubSubCategory",
+      "description": "All sub-sub-categories"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "All product catalog items"
+    },
+    "/settings/security": {
+      "schema": "Settings",
+      "description": "Security configuration"
+    }
+  }
+}

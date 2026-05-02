@@ -1,0 +1,13 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#0D3D3D" />
+  
+  <!-- Monogram NJ -->
+  <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="220" fill="#E2C799" font-weight="100" style="letter-spacing: -20px;">
+    N<tspan dy="-10" dx="10">J</tspan>
+  </text>
+  
+  <!-- Name -->
+  <text x="50%" y="82%" dominant-baseline="middle" text-anchor="middle" font-family="Brush Script MT, cursive, Georgia, serif" font-size="48" fill="#E2C799">
+    Nakshatra Jewels
+  </text>
+</svg>
