@@ -78,12 +78,8 @@ export default function CatalogGrid({
             </div>
             
             <div className="flex items-center justify-between mt-auto pt-2 border-t border-slate-50">
-               <span className="data-label text-[9px]">
-                FILE: {p.imageUrl.includes('png') ? 'PNG' : 'JPG'}
-              </span>
-               
                {isAdmin && (
-                <div className="flex gap-1">
+                <div className="flex gap-1 ml-auto">
                   <button 
                     onClick={(e) => { e.stopPropagation(); onEdit(p); }}
                     className="p-1 border border-high-border rounded bg-white hover:bg-slate-100 text-[#5E6C84] hover:text-high-ink transition-colors"

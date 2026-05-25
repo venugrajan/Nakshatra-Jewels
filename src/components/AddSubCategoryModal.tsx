@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ListPlus } from 'lucide-react';
-import { db } from '../lib/firebase';
+import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 interface AddSubCategoryModalProps {
@@ -27,7 +27,7 @@ export default function AddSubCategoryModal({ categoryId, onClose }: AddSubCateg
       onClose();
       setName('');
     } catch (err) {
-      console.error("Error adding subcategory:", err);
+      handleFirestoreError(err, OperationType.CREATE, 'subcategories');
     } finally {
       setLoading(false);
     }

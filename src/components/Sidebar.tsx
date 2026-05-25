@@ -26,11 +26,14 @@ interface SidebarProps {
   onSelectSubCategory: (id: string | null) => void;
   selectedSubSubCategory: string | null;
   onSelectSubSubCategory: (id: string | null) => void;
+  searchQuery: string;
+  onSearchChange: (q: string) => void;
   isAdmin: boolean;
   onDelete: (type: 'category' | 'subcategory' | 'subsubcategory' | 'product', id: string) => void;
   onAddCategory: () => void;
   onAddSubCategory: (catId: string) => void;
   onAddSubSubCategory: (subId: string) => void;
+  onLogoClick: () => void;
 }
 
 export default function Sidebar({
@@ -45,11 +48,14 @@ export default function Sidebar({
   onSelectSubCategory,
   selectedSubSubCategory,
   onSelectSubSubCategory,
+  searchQuery,
+  onSearchChange,
   isAdmin,
   onDelete,
   onAddCategory,
   onAddSubCategory,
-  onAddSubSubCategory
+  onAddSubSubCategory,
+  onLogoClick
 }: SidebarProps) {
   return (
     <>
@@ -66,7 +72,10 @@ export default function Sidebar({
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         <div className="p-4 border-b border-high-border bg-slate-50 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-3">
+          <div 
+            onClick={onLogoClick}
+            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+          >
           <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center border border-high-border overflow-hidden p-1 shadow-sm shrink-0">
             <img 
               src="/logo.svg" 
@@ -78,13 +87,13 @@ export default function Sidebar({
                 const parent = e.currentTarget.parentElement;
                 if (parent) {
                   parent.classList.add('bg-high-accent');
-                  parent.innerHTML = '<span class="text-white font-bold text-xs">NJ</span>';
+                  parent.innerHTML = '<span class="text-white font-bold text-xs">M</span>';
                 }
               }}
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-[14px] tracking-tight uppercase leading-tight text-high-accent">NAKSHATRA JEWELS</span>
+            <span className="font-bold text-[14px] tracking-tight uppercase leading-tight text-high-accent">Nakshatra Jewels</span>
           </div>
         </div>
 
@@ -97,6 +106,19 @@ export default function Sidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 py-4 scrollbar-hide">
+        {/* Mobile Search */}
+        <div className="md:hidden px-3 mb-4">
+          <div className="relative">
+            <input 
+              type="text"
+              placeholder="Search catalog..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-full bg-slate-50 border border-high-border rounded px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-high-accent"
+            />
+          </div>
+        </div>
+
         <div className="mb-3 px-3 data-label">
           Categories
         </div>

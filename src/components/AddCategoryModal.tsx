@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, FolderPlus } from 'lucide-react';
-import { db } from '../lib/firebase';
+import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 interface AddCategoryModalProps {
@@ -26,7 +26,7 @@ export default function AddCategoryModal({ isOpen, onClose }: AddCategoryModalPr
       onClose();
       setName('');
     } catch (err) {
-      console.error("Error adding category:", err);
+      handleFirestoreError(err, OperationType.CREATE, 'categories');
     } finally {
       setLoading(false);
     }

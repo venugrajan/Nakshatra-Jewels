@@ -15,7 +15,7 @@ export default function PinModal({ onClose, onConfirm }: PinModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pin === '1234') { // Default simple PIN for demo
+    if (pin === '1991') { // Default simple PIN for demo
       onConfirm(pin);
     } else {
       setError(true);

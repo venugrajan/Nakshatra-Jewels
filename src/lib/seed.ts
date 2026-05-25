@@ -2,8 +2,13 @@ import { db } from './firebase';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 export async function seedInitialData() {
-  const catSnap = await getDocs(collection(db, 'categories'));
-  if (!catSnap.empty) return;
+  try {
+    const catSnap = await getDocs(collection(db, 'categories'));
+    if (!catSnap.empty) return;
+  } catch (err) {
+    console.warn("Seeding check failed (likely quota). Skipping seed.");
+    return;
+  }
 
   console.log("Seeding KRBS Jewelry catalog data...");
 

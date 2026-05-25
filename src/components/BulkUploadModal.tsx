@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { X, Upload, CheckCircle2, ChevronDown, Package, Edit3, Trash2 } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Category, SubCategory, SubSubCategory } from '../types';
-import { db } from '../lib/firebase';
+import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { cn } from '../lib/utils';
 
@@ -21,10 +21,11 @@ interface BulkUploadModalProps {
   categories: Category[];
   subCategories: SubCategory[];
   subSubCategories: SubSubCategory[];
+  dealers: string[];
   onClose: () => void;
 }
 
-export default function BulkUploadModal({ categories, subCategories, subSubCategories, onClose }: BulkUploadModalProps) {
+export default function BulkUploadModal({ categories, subCategories, subSubCategories, dealers, onClose }: BulkUploadModalProps) {
   const [metas, setMetas] = useState<FileMetadata[]>([]);
   const [categoryId, setCategoryId] = useState('');
   const [subCategoryId, setSubCategoryId] = useState('');
@@ -130,7 +131,7 @@ export default function BulkUploadModal({ categories, subCategories, subSubCateg
       }
       onClose();
     } catch (err) {
-      console.error(err);
+      handleFirestoreError(err, OperationType.WRITE, 'products');
     } finally {
       setUploading(false);
     }
@@ -233,8 +234,12 @@ export default function BulkUploadModal({ categories, subCategories, subSubCateg
                     placeholder="Dealer Name"
                     value={commonDealer}
                     onChange={(e) => setCommonDealer(e.target.value)}
+                    list="dealer-list"
                     className="bg-white border border-high-border rounded py-1.5 px-3 text-xs outline-none"
                   />
+                  <datalist id="dealer-list">
+                    {dealers.map((d, i) => <option key={i} value={d} />)}
+                  </datalist>
                   <input 
                     placeholder="Sub-Item Type"
                     value={commonSubItem}
@@ -274,6 +279,7 @@ export default function BulkUploadModal({ categories, subCategories, subSubCateg
                             placeholder="Dealer"
                             value={meta.dealerName}
                             onChange={(e) => updateMeta(meta.id, 'dealerName', e.target.value)}
+                            list="dealer-list"
                             className="w-full border-b border-high-border px-1 py-0.5 text-[11px] outline-none focus:border-high-accent"
                           />
                         </div>
